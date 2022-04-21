@@ -36,16 +36,16 @@ const All = ({ items, dispatch }) => {
       <ul>
         {
           items.map(({ task, id, active, completed }, index) => (
-            <li key={index + 1} className='flex flex-row mb-2 h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
-              <input type="checkbox" name={task} id={id} key={id} checked={!active} onChange={() => handleCheckChange(id)}
+            <li key={id} className='flex flex-row mb-2 h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
+              <input type="checkbox" name={task} id={id} checked={!active} onChange={() => handleCheckChange(id)}
                 className='h-8 w-8 mx-5 lg:h-14 lg:w-14'
               /> {/* () => handleCheckChange(id) para pasarle un argumento en especifico*/}
-              <label htmlFor={id} className={!active ? 'line-through font-bold m-auto w-full h-auto' : undefined}>
+              <label htmlFor={id} className={!active ? 'line-through font-bold m-auto w-full h-auto' : 'w-full h-auto m-auto'}>
                 <span className='align-middle justify-center text-left md:text-lg lg:text-3xl'>
                   {task}
                 </span>
               </label>
-              {/* <input type="checkbox" name={task} id={id} key={id} checked={completed} onChange={() => handleCheckChangeCompleted(id)} /> */}
+              {/* <input type="checkbox" name={task} id={id} checked={completed} onChange={() => handleCheckChangeCompleted(id)} /> */}
               <hr />
             </li>
           ))
@@ -70,8 +70,8 @@ const Active = ({ items, dispatch }) => {
           items.map(({ id, task, active, completed }, index) => {
             if (active) {
               return (
-                <li key={index + 1} className='flex flex-row mb-2 h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
-                  <input type="checkbox" name={task} id={id} key={id} checked={!active} onChange={() => handleCheckChange(id)}
+                <li key={id} className='flex flex-row mb-2 h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
+                  <input type="checkbox" name={task} id={id} checked={!active} onChange={() => handleCheckChange(id)}
                     className='h-8 w-8 mx-5 lg:h-14 lg:w-14'
                   />
                   <label htmlFor={id} className='w-full h-auto m-auto'>
@@ -83,11 +83,7 @@ const Active = ({ items, dispatch }) => {
                 </li>
               )
             }
-            return (
-              <li>
-
-              </li>
-            )
+            return <li key={id}></li>
           })
         }
       </ul>
@@ -121,8 +117,8 @@ const Completed = ({ items, dispatch }) => {
         {
           items.map(({ id, task, active, completed }, index) => {
             if (completed) return (
-              <li key={index + 1} className='flex flex-row mb-2 justify-between h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
-                <input type="checkbox" name={task} id={id} key={id} checked disabled
+              <li key={id} className='flex flex-row mb-2 justify-between h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
+                <input  type="checkbox" name={task} id={id} checked disabled
                   className='h-8 w-8 mx-5 disabled:opacity-40 lg:h-14 lg:w-14'
                 />
                 <label className='w-full h-auto opacity-40 line-through font-bold m-auto' >
@@ -130,7 +126,7 @@ const Completed = ({ items, dispatch }) => {
                     {task}
                   </span>
                 </label>
-                {/* <input type="checkbox" name={task} id={id} key={id} checked={completed} onChange={() => handleCheckChangeCompleted(id)} /> */}
+                {/* <input type="checkbox" name={task} id={id} checked={completed} onChange={() => handleCheckChangeCompleted(id)} /> */}
                 <button onClick={() => deleteTask(id)} className='w-auto h-auto'>
                   <svg xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-auto stroke md:h-7 lg:h-14 "
@@ -147,6 +143,7 @@ const Completed = ({ items, dispatch }) => {
                 </button>
               </li>
             )
+            return(<li key={id}></li>)
           })
         }
         <br />
@@ -261,9 +258,9 @@ const App = () => {
         </button>
       </div>
       <Routes>
-        <Route path="/" element={<All items={toDoList} dispatch={dispatch} />} />
-        <Route path="/active" element={<Active items={toDoList} dispatch={dispatch} />} />
-        <Route path="/completed" element={<Completed items={toDoList} dispatch={dispatch} />} />
+        <Route path="/" element={<All items={toDoList} dispatch={dispatch} key={toDoList.id}/>} />
+        <Route path="/active" element={<Active items={toDoList} dispatch={dispatch} key={toDoList.id} />} />
+        <Route path="/completed" element={<Completed items={toDoList} dispatch={dispatch} key={toDoList.id} />} />
       </Routes>
     </div>
   );
