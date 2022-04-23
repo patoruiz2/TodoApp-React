@@ -91,9 +91,9 @@ const App = () => {
         </button>
       </div>
       <Routes>
-        <Route path="/" element={<All toDos={ toDoList } dispatch={dispatch} />} />
-        <Route path="/active" element={<Active toDos={ toDoList } dispatch={dispatch}  />} />
-        <Route path="/completed" element={<Completed toDos={ toDoList } dispatch={dispatch}  />} />
+        <Route path="TodoApp-React/" element={<All toDos={ toDoList } dispatch={dispatch} />} />
+        <Route path="TodoApp-React/active" element={<Active toDos={ toDoList } dispatch={dispatch}  />} />
+        <Route path="TodoApp-React/completed" element={<Completed toDos={ toDoList } dispatch={dispatch}  />} />
       </Routes>
     </div>
   );
