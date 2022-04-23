@@ -1,28 +1,12 @@
 import React from 'react';
-export const Completed = ({ items, dispatch }) => {
-  const handleCheckChange = (id) => {
-    dispatch({
-      type: 'Toggle',
-      payload: id
-    });
-  };
-  const deleteTask = (id) => {
-    dispatch({
-      type: 'Delete',
-      payload: id
-    });
-  };
-  const deleteAll = () => {
-    console.log(items);
-    dispatch({
-      type: 'DeleteAll',
-      payload: items
-    });
-  };
+import { handlers } from '../handlers/handlers-todos.js';
+
+export const ToDoListItemComplete = ({ toDos, dispatch }) => {
+  const { deleteTask, deleteAll } = handlers
   return (
-    <ul>
+    <>
       {
-        items.map(({ id, task, completed }, index) => {
+        toDos.map(({ task, id, completed }) => {
           if (completed) return (
             <li key={id} className='flex flex-row mb-2 justify-between h-full w-full md:mb-3 lg:mb-5 xl:mb-7'>
               <input type="checkbox" name={task} id={id} checked disabled
@@ -34,7 +18,7 @@ export const Completed = ({ items, dispatch }) => {
                 </span>
               </label>
               {/* <input type="checkbox" name={task} id={id} checked={completed} onChange={() => handleCheckChangeCompleted(id)} /> */}
-              <button onClick={() => deleteTask(id)} className='w-auto h-auto'>
+              <button onClick={() => deleteTask(id, dispatch)} className='w-auto h-auto'>
                 <svg xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-auto stroke md:h-7 lg:h-14 "
                   viewBox="0 0 20 20"
@@ -53,10 +37,9 @@ export const Completed = ({ items, dispatch }) => {
           return (<li key={id}></li>)
         })
       }
-      <br />
       <hr />
       <section className='flex justify-center content-center mt-3'>
-        <button onClick={deleteAll}
+        <button onClick={() => deleteAll(dispatch)}
           className='border border-red-600 bg-red-600 rounded-md 
             w-auto p-2 m-2 text-center font-bold flex items-center md:p-3 xl:p-4'
         >
@@ -77,6 +60,6 @@ export const Completed = ({ items, dispatch }) => {
           </svg>
         </button>
       </section>
-    </ul>
-  );
+    </>
+  )
 };
